@@ -1,15 +1,13 @@
 #include<bits/stdc++.h>
-#define _ ios_base::sync_with_stdio(0);
 using namespace std;
+typedef long long ll;
 
-long long int fastexp(int a,int n){
-	long long int x;
-	if(n==0) return 1;
-	if(n==1) return a;
-
-	if(n%2==0){
-		x = fastexp(a,n/2);
+ll fast_exp(ll a, ll exp){
+	if(exp==0) return 1;
+	if(exp==1) return a;
+	if((exp&1)==0){ //par
+		ll x = fast_exp(a, exp/2);
 		return x*x;
 	}
-	else return fastexp(a,n-1)*a;
+	return fast_exp(a, exp-1)*a;
 }
