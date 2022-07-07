@@ -17,7 +17,3 @@ void add(int i, ll v, int n){
 void add_range(int l, int r, ll v, int n){ //[l,r]
   add(l, v, n); add(r+1, -v, n);
 }
-
-void set(int i, ll v, int n){ //[i]
-  add(i, v-sum_single(i), n);
-}
