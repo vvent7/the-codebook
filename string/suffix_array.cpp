@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define fi first
 #define sec second
-#define mp make_pair
 using namespace std;
 typedef pair<int, int> pi;
 
@@ -18,7 +17,7 @@ void build_suffs(string &s, int p[]){ //'$' no final de s
   int n=s.size(), rank[n], newRank[n];
   pair<char, int> aux[n];
 
-  for(int i=0;i<n;i++) aux[i]=mp(s[i], i);
+  for(int i=0;i<n;i++) aux[i]={s[i], i};
   sort(aux, aux+n);
 
   p[0]=aux[0].sec; rank[p[0]]=0;
@@ -35,9 +34,9 @@ void build_suffs(string &s, int p[]){ //'$' no final de s
     counting_suffs_sort(p, rank, n); //ordenando pela metade 1
 
     //Atualizando ranks de sufixos em p
-    newRank[p[0]]=0; pre=mp(rank[p[0]], rank[(p[0]+k)%n]);
+    newRank[p[0]]=0; pre={rank[p[0]], rank[(p[0]+k)%n]};
     for(int i=1;i<n;i++, pre=cur){
-      cur=mp(rank[p[i]], rank[(p[i]+k)%n]);
+      cur={rank[p[i]], rank[(p[i]+k)%n]};
       newRank[p[i]]=newRank[p[i-1]];
       if(pre!=cur) newRank[p[i]]++;
     }

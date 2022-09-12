@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAX_N 1002
+#define MAX_N 100005
 
 int parent[MAX_N], rnk[MAX_N];
 
+//setting [0,n] (0 and 1 based allowed)
 void begin_sets(int n){
-  for(int i=1;i<=n;i++){
+  for(int i=0;i<=n;i++){
     parent[i]=i; rnk[i]=1;
   }
 }

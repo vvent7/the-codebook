@@ -20,12 +20,12 @@ void build(int *a, int n){
       table[i][j]=merge(table[i-1][j], table[i-1][j+(1<<(i-1))]);
 }
 
-int rmq_query(int l, int r){
+int query_rmq(int l, int r){
   int k=MSBI(r-l+1);
   return merge(table[k][l], table[k][r-(1<<k)+1]);
 }
 
-ll rsq_query(int l, int r){
+ll query_rsq(int l, int r){
   ll res=0;
   for(int i=MSBI(r-l+1);i>=0;i--){
     if((1<<i)<=(r-l+1)){
