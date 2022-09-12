@@ -16,7 +16,9 @@ struct SegTree{
   void build(ll *a, ll x, ll lx, ll rx){
     if(lx==rx){values[x]=single(a[lx]); return;}
     ll mid=(lx+rx)/2, x1=x+1, x2=x+2*(mid-lx+1);
+
     build(a, x1, lx, mid); build(a, x2, mid+1, rx);
+    
     values[x]=merge(values[x1], values[x2]);
   }
   void build(ll *a, ll n){
