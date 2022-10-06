@@ -9,7 +9,7 @@ struct SegTree{
   ll single(ll v){
     return v;
   }
-  ll merge(ll v, ll w){
+  ll unite(ll v, ll w){
     return v+w;
   }
 
@@ -19,7 +19,7 @@ struct SegTree{
 
     build(a, x1, lx, mid); build(a, x2, mid+1, rx);
     
-    values[x]=merge(values[x1], values[x2]);
+    values[x]=unite(values[x1], values[x2]);
   }
   void build(ll *a, ll n){
     this->n=n; nx=2*n-1;
@@ -33,7 +33,7 @@ struct SegTree{
     if(i<=mid) update_set(i, v, x1, lx, mid);
     else update_set(i, v, x2, mid+1, rx);
 
-    values[x]=merge(values[x1], values[x2]);
+    values[x]=unite(values[x1], values[x2]);
   }
   void update_set(ll i, ll v){
     update_set(i, v, 0, 0, n-1);
@@ -46,7 +46,7 @@ struct SegTree{
     ll mid=(lx+rx)/2, x1=x+1, x2=x+2*(mid-lx+1);
     ll v1=query_sum(l, r, x1, lx, mid), v2=query_sum(l, r, x2, mid+1, rx);
 
-    return merge(v1, v2);
+    return unite(v1, v2);
   }
   ll query_sum(ll l, ll r){
     return query_sum(l, r, 0, 0, n-1);

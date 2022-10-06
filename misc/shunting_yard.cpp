@@ -11,7 +11,7 @@ string shunting_yard(string &infix){
   for(size_t i=0;i<infix.size();i++){
     if(infix[i]=='(') st.push(infix[i]); // (
     else if(isdigit(infix[i])){ //numero
-      size_t j=find_if_not(infix.begin()+i, infix.end(), [](const char c){return isdigit(c);})-infix.begin();
+      size_t j=find_if_not(infix.begin()+i, infix.end(), [](const char c){return isdigit(c);}) - infix.begin();
       postfix.append(infix, i, j-i).append(" ");
       i=j-1;
     }
