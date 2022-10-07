@@ -3,23 +3,22 @@
 #define eb emplace_back
 using namespace std;
 typedef vector<int> vi;
-typedef vector<pair<int,int>> vpi;
 
 #define MAX_N 100005
 
-vpi g[MAX_N]; //DAG (directed acyclic graph)
+vi g[MAX_N]; //DAG (directed acyclic graph)
 bool visited[MAX_N]; //toposort_dfs
 int inDegree[MAX_N]; //toposort_kahn, toposort_check
 vi ts; //result
 
-void toposort_dfs2(int u){
+void toposort_dfs2(int u){ //dfs recursion
   visited[u]=true;
-  for(auto &p:g[u])
-    if(!visited[p.fi])
-      toposort_dfs2(p.fi);
+  for(auto v:g[u])
+    if(!visited[v])
+      toposort_dfs2(v);
   ts.eb(u);
 }
-void toposort_dfs1(int n){
+void toposort_dfs1(int n){ //dfs main function
   fill(visited, visited+n, 0); //0-based
   ts.clear();
 
@@ -41,16 +40,16 @@ void toposort_kahn(int n){
 
   while(!pq.empty()){
     int u=pq.top(); pq.pop(); ts.eb(u);
-    for(auto &p:g[u])
-      if((--inDegree[p.fi])==0)
-        pq.emplace(p.fi);
+    for(auto v:g[u])
+      if((--inDegree[v])==0)
+        pq.emplace(v);
   }
 }
 
 bool toposort_check(vi &ts){
   for(auto &u:ts){
     if(inDegree[u]!=0) return false;
-    for(auto &p:g[u]) inDegree[p.fi]--;
+    for(auto v:g[u]) inDegree[v]--;
   }
   return true;
 }
