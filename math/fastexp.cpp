@@ -1,5 +1,5 @@
-#define MOD 1000000009LL
 typedef long long ll;
+#define MOD 1000000009LL
 
 ll mod(ll a, ll m){
   return ((a%m)+m)%m;
