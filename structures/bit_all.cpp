@@ -1,5 +1,5 @@
 typedef long long ll;
-#define MAX_N 200005
+const int MAX_N = 200005;
 #define LSB(x) ((x)&-(x))
 
 ll bit1[MAX_N], bit2[MAX_N];

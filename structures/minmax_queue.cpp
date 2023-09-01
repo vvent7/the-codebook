@@ -5,7 +5,7 @@ using namespace std;
 typedef pair<int, int> pi;
 
 //st1: add, st2: remove
-stack<pi> st1, st2;
+stack<pi> st1, st2; //{x, min/max}
 
 void add_back(int x){
   st1.emplace(x, st1.empty()?x:min(x, st1.top().sec));

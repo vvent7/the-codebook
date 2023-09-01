@@ -1,6 +1,5 @@
 typedef long long ll;
-#define N 105
-#define M 105
+const int N = 1005, M = 1005;
 #define LSB(x) ((x)&-(x))
 
 ll bit[N][M];

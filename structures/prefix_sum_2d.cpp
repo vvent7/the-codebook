@@ -1,6 +1,5 @@
 typedef long long ll;
-#define MAX_N 1005
-#define MAX_M 1005
+const int MAX_N =1005, MAX_M = 1005;
 
 ll pre[MAX_N][MAX_M];
 

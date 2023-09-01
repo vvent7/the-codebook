@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAX_N 100005
+const int MAX_N = 100005;
 
 int parent[MAX_N], rnk[MAX_N];
 

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 void insertion_sort(int arr[], int n){
   for(int i=1, j, aux;i<n;i++){
     aux=arr[i];
