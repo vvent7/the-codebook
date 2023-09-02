@@ -4,7 +4,7 @@
 using namespace std;
 typedef vector<int> vi;
 
-#define MAX_N 100005
+const int MAX_N = 100005;
 
 vi g[MAX_N]; //DAG (directed acyclic graph)
 bool visited[MAX_N]; //toposort_dfs
