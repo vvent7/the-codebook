@@ -21,5 +21,5 @@ void floyd_warshall(int V){
 
 void printPath(int i, int j) {
   if (i != j) printPath(i, p[i][j]);
-  printf(" %d", i);
+  cout<<i<<" ";
 }
