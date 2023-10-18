@@ -5,23 +5,19 @@ struct point2d {
   point2d() {}
   point2d(ftype x, ftype y): x(x), y(y) {}
   point2d& operator+=(const point2d &t) {
-    x += t.x;
-    y += t.y;
+    x += t.x; y += t.y;
     return *this;
   }
   point2d& operator-=(const point2d &t) {
-    x -= t.x;
-    y -= t.y;
+    x -= t.x; y -= t.y;
     return *this;
   }
   point2d& operator*=(ftype t) {
-    x *= t;
-    y *= t;
+    x *= t; y *= t;
     return *this;
   }
   point2d& operator/=(ftype t) {
-    x /= t;
-    y /= t;
+    x /= t; y /= t;
     return *this;
   }
   point2d operator+(const point2d &t) const {
@@ -42,6 +38,7 @@ struct point2d {
   }
   ftype dot(const point2d &a, const point2d &b) const {
     return (a - *this).dot(b - *this);
+    //relative to this
   }
 
   ftype cross(const point2d &t) const {
@@ -49,6 +46,7 @@ struct point2d {
   }
   ftype cross(const point2d &a, const point2d &b) const {
     return (a - *this).cross(b - *this);
+    //relative to this
   }
 
   ftype sqrLen() const {

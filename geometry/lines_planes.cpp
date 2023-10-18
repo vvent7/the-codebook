@@ -2,16 +2,25 @@
 #include "point3d.cpp"
 #include "cross.cpp"
 
-//======LINE PARAMETRIC======
 const double EPS=1e-9;
+//======LINE PARAMETRIC======
 
 struct line_param{ //2d only
   double a, b, c;
-  line_param(double a, double b, double c): a(a), b(b), c(c) {}
+  line_param(){}
+  line_param(double a, double b, double c)
+    : a(a), b(b), c(c) {}
   line_param(point2d p, point2d q){
     a = p.y - q.y;
     b = q.x - p.x;
     c = - a*p.x - b*p.y;
+  }
+  double norm() const{
+    return sqrt(a*a + b*b);
+  }
+  double dist(const point2d p) const{
+    return (a*p.x + b*p.y + c)/norm();
+    //remove /norm() if only int
   }
   //ax + by + c = 0
 };
@@ -36,23 +45,44 @@ bool equivalent(line_param m, line_param n) {
 
 
 //======LINE VECTOR======
-struct line_vector{ //can be 2d or 3d
-  point3d a, d; //point, direction
-  line_vector(point3d a, point3d d): a(a), d(d) {}
+struct line_vector{ //2d or 3d
+  point2d a, d; //point, direction
+  line_vector(){}
+  line_vector(point2d a, point2d d)
+    : a(a), d(d) {}
   //r = a + t * d
 };
 
 //r1 = a1 + t1 * d1, r2 = a2 + t2 * d2 
-point2d intersectLines(point2d a1, point2d d1, point2d a2, point2d d2) {
-  return a1 + cross(a2 - a1, d2) / cross(d1, d2) * d1;
+point2d intersectLines(line_vector r1, line_vector r2) {
+  return r1.a + cross(r2.a - r1.a, r2.d) / cross(r1.d, r2.d) * r1.d;
 }
 
 
-//======PLANE======
+//======PLANE PARAMETRIC======
+struct plane_param{
+  double a, b, c, d;
+  plane_param(double a, double b, double c, double d)
+    : a(a), b(b), c(c), d(d) {}
+  plane_param(point3d p, point3d n){
+    a = n.x; b = n.y; c = n.z;
+    d = - n.x*p.x - n.y*p.y - n.z*p.z;
+  }
+  double norm(){
+    return sqrt(a*a + b*b + c*c);
+  }
+  double dist(point3d p){
+    return (a*p.x + b*p.y + c*p.z + d)/norm();
+    //remove /norm() if only int
+  }
+};
 
-struct plane{ //can be 2d or 3d
+
+//======PLANE VECTOR======
+struct plane_vector{ //can be 2d or 3d
   point3d a, n; //point, normal
-  plane(point3d a, point3d n): a(a), n(n) {}
+  plane_vector(point3d a, point3d n)
+    : a(a), n(n) {}
   //dot(n, r - a) = 0
 };
 

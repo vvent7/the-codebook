@@ -1,4 +1,3 @@
-
 #include "point2d.cpp"
 #include "dot.cpp"
 #include "cross.cpp"
