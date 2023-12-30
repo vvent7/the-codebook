@@ -8,6 +8,7 @@ struct FenwickTree{
   int n;
   vector<ll> bit; //or ll a[N]; (faster)
 
+  FenwickTree(){}
   FenwickTree(int n, ll v=0)
     : n(0), bit(n, v){}
 
