@@ -16,7 +16,7 @@ void dfs(int u, int p){
     euler[eulerSz++]=u;
   }
 }
-void buildEuler(int root){
+void build_euler(int root){
   depth[root] = eulerSz = 0;
   dfs(root, root);
 }

@@ -7,7 +7,7 @@ constexpr int MAX_N = 2e5+5, LOG_N = LOG(MAX_N);
 vector<int> g[MAX_N];
 int depth[MAX_N], up[MAX_N][LOG_N];
 
-void dfs(int u){
+void lca_dfs(int u){
   for(int v:g[u]){
     if(up[u][0]==v) continue;
     
@@ -16,8 +16,13 @@ void dfs(int u){
     for(int i=1; i<LOG_N; ++i)
       up[v][i] = up[up[v][i-1]][i-1];
     
-    dfs(v);
+    lca_dfs(v);
   }
+}
+void lca_build(int root){
+  fill(up[root], up[root]+LOG_N, root); //self-parent
+  depth[root] = 0;
+  lca_dfs(root);
 }
 
 int lca(int u, int v){
