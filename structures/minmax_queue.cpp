@@ -1,41 +1,42 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define fi first
 #define sec second
-using namespace std;
-typedef pair<int, int> pi;
+typedef long long ll;
+typedef pair<ll, ll> pll;
 
-//st1: add, st2: remove
-stack<pi> st1, st2; //{x, min/max}
+struct MinQueue{
+  stack<pll> st1, st2; //add, remove {x, min/max}
 
-void add_back(int x){
-  st1.emplace(x, st1.empty()?x:min(x, st1.top().sec));
-}
-
-int find_min(){
-  return !(st1.empty() || st2.empty())
-    ? min(st1.top().sec, st2.top().sec)
-    : !st1.empty()
-      ? st1.top().sec
-      : !st2.empty()
-        ? st2.top().sec
-        : INT_MAX; //neutro (ambas vazias)
-}
-
-void rm_front(){
-  if(!st2.empty()){
-    st2.pop(); return;
+  void push_back(ll x){
+    st1.emplace(x, st1.empty() ? x :min(x, st1.top().sec));
   }
-  if(st1.empty()) return;
 
-  while(!st1.empty()){
-    int x=st1.top().fi; st1.pop();
-    st2.emplace(x, st2.empty()?x:min(x, st2.top().sec));
+  ll minimum(){
+    return !(st1.empty() || st2.empty())
+      ? min(st1.top().sec, st2.top().sec)
+      : !st1.empty()
+        ? st1.top().sec
+        : !st2.empty()
+          ? st2.top().sec
+          : INT_MAX; //neutro (ambas vazias)
   }
-  st2.pop();
-}
 
-//sempre limpar para reutilizar
-void clear_all(){
-  while(!st1.empty()) st1.pop();
-  while(!st2.empty()) st2.pop();
-}
+  void pop_front(){
+    if(!st2.empty()){
+      st2.pop(); return;
+    }
+    if(st1.empty()) return;
+
+    while(!st1.empty()){
+      ll x=st1.top().fi; st1.pop();
+      st2.emplace(x, st2.empty() ? x : min(x, st2.top().sec));
+    }
+    st2.pop();
+  }
+
+  void clear(){ // clear to reuse
+    while(!st1.empty()) st1.pop();
+    while(!st2.empty()) st2.pop();
+  }
+};
