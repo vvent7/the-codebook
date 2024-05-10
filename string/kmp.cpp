@@ -1,30 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAX_N = 100005;
-
-string T, P;
-int n, m, b[MAX_N];
-
-void kmpPreprocess(){
-  int i=0, j=-1; b[0] = -1;
-
-  while(i<m){
-    while((j>=0) && (P[i] != P[j])) j = b[j];
-    i++;j++;
-    b[i] = j;
+vector<int> pi_function(string &s){
+  int n=s.size();
+  vector<int> pi(n);
+  for(int i=1, j=0;i<n;++i){
+    while(j>0 && s[i]!=s[j]) j=pi[j-1];
+    if(s[i]==s[j]) ++j;
+    pi[i] = j;
   }
+  return pi;
 }
 
-void kmpSearch(){
-  int i = 0, j =0;
-  while(i < n){
-    while((j>=0) && (T[i] != P[j])) j = b[j];
-    i++; j++;
-
-    if(j == m){
-      cout << "P is found at index " << i-j << " in T\n";
-      j = b[j];
+void kmp_search(string &t, string &p, vector<int> &pi){
+  int n=t.size(), m=p.size();
+  for(int i=0, j=0;i<n;++i){
+    while(j>0 && t[i]!=p[j]) j = pi[j-1];
+    if(t[i]==p[j]) ++j;
+    if(j==m){
+      cout<<"P is found at "<<i-j+1<<" in T\n";
+      j = pi[j-1];
     }
   }
 }
