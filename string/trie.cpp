@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAX_N = 100005; 
+constexpr int MAX_C = 1e6 + 5; 
 
 struct Trie{
   struct TrieNode{
@@ -11,9 +11,11 @@ struct Trie{
       cnt = 0; wrd = 0;
       m.clear();
     }
-  } t[MAX_N];
+  } t[MAX_C];
 
   int en; //node count
+
+  Trie(){ clear(); }
 
   int new_node(){
     t[en].cnt = t[en].wrd = 0;
@@ -21,24 +23,24 @@ struct Trie{
     return en++; //new node index
   }
 
-  void init(){
+  void clear(){
     en = 0;
     new_node();
   }
 
-  // Adiciona string na Trie
-  void add(int node, string &s, int i){
+  // Add string 's' to Trie
+  void add(string &s, int i = 0, int node = 0){
     t[node].cnt++;
     if(i == s.size()){
       t[node].wrd++; return;
     }
     if(!t[node].m.count(s[i]))
       t[node].m[s[i]] = new_node();
-    add(t[node].m[s[i]], s, i + 1);
+    add(s, i + 1, t[node].m[s[i]]);
   }
 
-  // Retorna true se s estava na trie
-  bool remove(int node, string &s, int i){
+  // Returns true if 's' is in Trie
+  bool remove(string &s, int i = 0, int node = 0){
     if(i == s.size()){
       if(t[node].wrd){
         t[node].wrd--;
@@ -49,22 +51,22 @@ struct Trie{
     }
 
     if(!t[node].m.count(s[i])) return false;
-    int son = t[node].m[s[i]];
-    if(remove(son, s, i + 1)){
+    int child = t[node].m[s[i]];
+    if(remove(s, i+1, child)){
       t[node].cnt--;
-      if(t[son].cnt == 0) t[node].m.erase(s[i]);
+      if(t[child].cnt == 0) t[node].m.erase(s[i]);
       return true;
     }
     return false;
   }
 
-  //Retorna true se s está na trie
-  bool find(int node, string &s, int i){
+  // Returns true if 's' is in Trie
+  bool find(string &s, int i = 0, int node = 0){
     if(i == s.size()){
       if(t[node].wrd) return true;
       return false;
     }
     if(!t[node].m.count(s[i])) return false;
-    return find(t[node].m[s[i]], s, i + 1);
+    return find(s, i + 1, t[node].m[s[i]]);
   }
 };
