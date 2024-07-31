@@ -1,45 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef vector<int> vi;
 
-const int MAX_N = 100005;
-enum{UNVISITED=-1};
+constexpr int MAX_NM = 2e5+5, UNVISITED=-1, STACKED=-2;
 
-vector<pair<int,int>> g[MAX_N];
+int n, m;
+vector<int> g[MAX_NM];
 
 int dfsNumberCounter, numSCC;
-vi dfs_num, dfs_low, visited;
-stack<int> St;
+int dfs_num[MAX_NM], dfs_low[MAX_NM];
+stack<int, vector<int>> st;
+int component[MAX_NM];
 
 void tarjanSCC(int u) {
-  dfs_low[u] = dfs_num[u] = dfsNumberCounter;
-  dfsNumberCounter++;
-  St.push(u);
-  visited[u] = 1; //in stack
+  dfs_low[u] = dfs_num[u] = dfsNumberCounter++;
+  st.push(u); component[u] = STACKED; //in stack
 
-  for(auto &[w, v] : g[u]) {
-    if(dfs_num[v] == UNVISITED)
+  for(auto v : g[u]) {
+    if(component[v] == UNVISITED)
       tarjanSCC(v);
-    if(visited[v]) // condition for update
+    if(component[v] == STACKED) // condition for update
       dfs_low[u] = min(dfs_low[u], dfs_low[v]);
   }
 
   // a root/start of an SCC
   if (dfs_low[u] == dfs_num[u]) {
-    ++numSCC;
     while (1) { //pop until u (current SCC)
-      int v = St.top(); St.pop();
-      visited[v] = 0;
+      int v = st.top(); st.pop();
+      component[v] = numSCC;
       if (u == v) break;
     }
+    ++numSCC;
   }
 }
 
 void tarjan(int V){
-  dfs_num.assign(V, UNVISITED); dfs_low.assign(V, 0); visited.assign(V, 0);
-  while (!St.empty()) St.pop();
+  fill(dfs_num, dfs_num+V+1, UNVISITED);
+  fill(dfs_low, dfs_low+V+1, UNVISITED);
+  fill(component, component+V+1, UNVISITED);
+  
+  while (!st.empty()) st.pop();
+
   dfsNumberCounter = numSCC = 0;
-  for (int u = 0; u < V; ++u)
-    if (dfs_num[u] == UNVISITED)
+  for(int u = 1; u <= V; ++u)
+    if(dfs_num[u] == UNVISITED)
       tarjanSCC(u);
 }
